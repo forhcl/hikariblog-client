@@ -5,7 +5,7 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
+  { //主页路由
     path: '/',
     name: 'Home',
     component: Home
@@ -16,7 +16,27 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
+  },
+  { //标签页面路由
+    path: '/tag',
+    component: () => import('../views/Tag.vue')
+  },
+  { //分类页面路由
+    path: '/category',
+    component: () => import('../views/Category.vue')
+  },
+  {
+    path: '/edit',
+    component: () => import('../views/Edit.vue')
+  },
+  {
+    path: '/list',
+    component: () => import('../views/List.vue')
+  },
+  {
+    path: '/post',
+    component: () => import('../views/Post.vue')
   }
 ]
 
