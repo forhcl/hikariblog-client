@@ -11,8 +11,12 @@ import 'jquery/dist/jquery.min.js'
 //引用 bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+//全局注册 Element-UI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(mavonEditor)
+Vue.use(mavonEditor);
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 

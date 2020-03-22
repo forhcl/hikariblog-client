@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="logo">
           <h2>
-            <router-link to='/' tag='span' title>Hikari</router-link>
+            <router-link to="/" tag="span" title>Hikari</router-link>
           </h2>
         </div>
         <!-- logo end-->
@@ -27,13 +27,13 @@
         </nav>
         <!--navigation end-->
         <div class="rt-subs">
-          <a class="subscribe-btn" href="#" title>
-            <i class="la la-envelope-o"></i> Subscribe
-          </a>
+          <Login/>
+          
           <a class="search-btn" @click="negationSearchPageisActive()" href="#" title>
             <i class="la la-search"></i>
           </a>
         </div>
+
         <!-- 响应式侧边栏打开按钮 -->
         <div class="menu-btn">
           <a href="#" title>
@@ -46,6 +46,7 @@
         <div class="clearfix"></div>
       </div>
     </header>
+
     <!--HEADER END-->
 
     <!-- 响应式的侧边栏菜单 -->
@@ -77,7 +78,7 @@
     </div>
     <!--side-menu end-->
 
-    <!-- 搜索页面 -->
+    <!-- 搜索页面弹窗 -->
     <div class="search-page" :class="{ active: SearchPageisActive }">
       <form>
         <div class="container">
@@ -93,28 +94,33 @@
         <i class="la la-close"></i>
       </a>
     </div>
-    <!--SEARCH PAGE END-->
   </div>
 </template>
 
 <script>
+// @ is an alias to /src
+import Login from '@/components/user/login/Login.vue'
+
 export default {
   name: "NavBar",
-  data(){
+  data() {
     return {
       //控制搜索框是否打开
-      SearchPageisActive:false
-    }
+      SearchPageisActive: false,
+    };
   },
-  methods:{
-    negationSearchPageisActive(){
-      this.SearchPageisActive=!this.SearchPageisActive;
+  components:{
+    Login
+  },
+  methods: {
+    negationSearchPageisActive() {
+      this.SearchPageisActive = !this.SearchPageisActive;
     }
   }
 };
 </script>
 <style>
 .navigation-item {
-	font-size: 10pt;
+  font-size: 10pt;
 }
 </style>
