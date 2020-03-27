@@ -3,8 +3,18 @@
 这样子就可以公用一个模态框 这时候就不会出现现在登录注册切换的时候的闪屏，导致用户体验不好 -->
 <template>
   <span>
-    <!-- 登录按钮 -->
-    <span class="subscribe-btn" @click="loginDialogVisible = true" title>登录</span>
+    <!-- 一、登录状态 -->
+    <!-- 1、新建文章按钮 -->
+    <!-- <router-link to="/edit" tag="el-button">新建文章</router-link> -->
+    <!-- 2、个人中心按钮，用户登录之后再把src改成动态的用户avatar -->
+    <!-- <el-avatar shape="square" size="small" src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"></el-avatar> -->
+    
+    <!-- 二、未登录状态 -->
+    <!-- 1、登录按钮 -->
+    <el-link type="primary" @click="loginDialogVisible = true">登录</el-link>
+    <el-divider direction="vertical"></el-divider>
+    <!-- 2、注册按钮 -->
+    <el-link type="primary" @click="registerDialogVisible=true">注册</el-link>
 
     <!-- 登录对话框 -->
     <el-dialog
@@ -37,12 +47,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="text" @click="switchoverLoginAndRegister()">账号注册</el-button>
-        <el-button type="primary" @click="loginDialogVisible = false">登录</el-button>
+        <el-button type="primary" @click="loginoperation()">登录</el-button>
       </div>
     </el-dialog>
-
-    <!-- 注册按钮 -->
-    <span class="subscribe-btn" @click="registerDialogVisible=true" title>注册</span>
 
     <!-- 注册对话框 -->
     <el-dialog
@@ -111,6 +118,10 @@
 </template>
 
 <script>
+//引入网络模块
+import { instance1 } from "../../../network/index";
+import Qs from "qs";
+
 export default {
   name: "Login",
   data() {
@@ -132,10 +143,40 @@ export default {
       }
     };
   },
-  methods:{
-    switchoverLoginAndRegister(){
-      this.loginDialogVisible=!this.loginDialogVisible,
-      this.registerDialogVisible=!this.registerDialogVisible
+  methods: {
+    switchoverLoginAndRegister() {
+      (this.loginDialogVisible = !this.loginDialogVisible),
+        (this.registerDialogVisible = !this.registerDialogVisible);
+    },
+    //登录网络请求
+    loginoperation() {
+      instance1({
+        url: "/login",
+        method: "POST",
+        data: {
+          username: this.login.username,
+          password: this.login.password
+        },
+        transformRequest: [
+          function(data) {
+            // 对 data 进行任意转换处理
+            return Qs.stringify(data);
+          }
+        ]
+      })
+        .then(res => {
+          //登录成功消息提示
+          this.$message({
+            message: res.data.message,
+            type: "success"
+          });
+          //关闭登录对话框
+          this.loginDialogVisible = false;
+        })
+        .catch(err => {
+          //登录失败消息提示
+          this.$message.error(err.response.data.message);
+        });
     }
   }
 };

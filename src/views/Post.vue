@@ -1,22 +1,79 @@
-<!-- 查看某一篇具体的文章页面 -->
+<!-- 查看某一篇具体的文章页面,因为后端中具体文章接口还没有完善，所以暂时搁置 -->
 <template>
   <div>
-    <NavBar />
-    <p>查看具体的文章</p>
+    <template v-if="success">
+      <div class="blog-info">
+        <ul class="meta">
+          <li>
+            <a href="#" title class="post-category">{{post.category.name}}</a>
+          </li>
+          <li>{{post.updateTime}}</li>
+          <li>
+            <i class="la la-eye"></i>{{post.readCount}}
+          </li>
+          <li>
+            <a href="#" title>
+              <i class="la la-comment-o"></i>{{post.commentCount}}
+            </a>
+          </li>
+        </ul>
+        <!-- 文章标题,变成动态的从服务器获取 -->
+        <h1 class="post-title">{{post.title}}</h1>
+      </div>
+      <!-- 把找到的文章内容显示出来 -->
+      <p v-html="post.htmlContent"></p>
+    </template>
+    <p>{{error.message}}</p>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import NavBar from "@/components/navbar/NavBar.vue";
-import License from "@/components/license/License.vue";
+//引入网络模块
+import { instance1 } from "../network/index";
 
 export default {
   name: "Post",
-  components: {
-    NavBar,
-    //这个声明到时候要让它在最下面！！
-    License
+  data() {
+    return {
+      success: false,
+      post: {
+        id: 0,
+        title: "",
+        htmlContent: "",
+        author: "",
+        updateTime: "",
+        readCount: 0,
+        starCount: 0,
+        commentCount: 0,
+        category: {
+          id: 0,
+          name: "",
+          owner: ""
+        }
+      },
+      error: {
+        timestamp: "",
+        status: 0,
+        error: "",
+        message: ""
+      }
+    };
+  },
+  created() {
+    instance1({
+      //查找哪篇文章的id根据前端路由的路径参数决定
+      url: "/post/" + this.$route.params.id,
+      method: "GET"
+    })
+      .then(res => {
+        this.success = true;
+        //查询文章成功,将返回的数据赋值给data
+        this.post = res.data;
+      })
+      .catch(err => {
+        //查询文章失败,将失败信息赋值给error
+        this.error = err.response.data;
+      });
   }
-}
+};
 </script>

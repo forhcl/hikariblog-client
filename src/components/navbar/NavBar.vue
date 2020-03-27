@@ -1,14 +1,19 @@
 <template>
-  <div>
-    <!-- 横向导航栏 -->
-    <header class="style2">
-      <div class="container-fluid">
+  <!-- 横向导航栏 -->
+  <header class="style2">
+    <!-- 一行包括24栏，自己分配 -->
+    <el-row>
+      <!-- 网站LOGO -->
+      <el-col :push="1" :span="2">
         <div class="logo">
           <h2>
             <router-link to="/" tag="span" title>Hikari</router-link>
           </h2>
         </div>
-        <!-- logo end-->
+      </el-col>
+      <!-- 导航栏菜单 -->
+      <el-col :span="12" :push="5">
+        <!-- nav标签用于定义导航链接 -->
         <nav>
           <ul>
             <li>
@@ -25,96 +30,32 @@
             </li>
           </ul>
         </nav>
-        <!--navigation end-->
-        <div class="rt-subs">
-          <Login/>
-          
-          <a class="search-btn" @click="negationSearchPageisActive()" href="#" title>
-            <i class="la la-search"></i>
-          </a>
-        </div>
-
-        <!-- 响应式侧边栏打开按钮 -->
-        <div class="menu-btn">
-          <a href="#" title>
-            <span class="bar1"></span>
-            <span class="bar2"></span>
-            <span class="bar3"></span>
-          </a>
-        </div>
-        <!--menu-btn end-->
-        <div class="clearfix"></div>
-      </div>
-    </header>
-
-    <!--HEADER END-->
-
-    <!-- 响应式的侧边栏菜单 -->
-    <div class="side-menu">
-      <a href="#" title class="close-sidemenu">
-        <i class="la la-close"></i>
-      </a>
-      <ul class="navigation">
-        <li>
-          <a href="index.html" title>Home</a>
-        </li>
-        <li>
-          <a href="standard-post.html" title>Standard Post</a>
-        </li>
-        <li>
-          <a href="about.html" title>About</a>
-        </li>
-        <li>
-          <a href="contact.html" title>Contact</a>
-        </li>
-      </ul>
-      <!--navigation end-->
-      <div class="logo">
-        <h2>
-          <a href="#" title>Hikari</a>
-        </h2>
-      </div>
-      <!-- logo end-->
-    </div>
-    <!--side-menu end-->
-
-    <!-- 搜索页面弹窗 -->
-    <div class="search-page" :class="{ active: SearchPageisActive }">
-      <form>
-        <div class="container">
-          <div class="form-field">
-            <input type="text" name="search" placeholder="Enter Your Keywords" />
-            <button type="submit">
-              <i class="la la-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-      <a href="#" title class="close-search" @click="negationSearchPageisActive()">
-        <i class="la la-close"></i>
-      </a>
-    </div>
-  </div>
+      </el-col>
+      <!-- 搜索控件 -->
+      <el-col :span="4" :push="2" style="padding: 22px 11px 29px;">
+        <!-- 这里直接监听enter按钮 -->
+        <el-input v-model="message" placeholder="请输入内容"></el-input>
+      </el-col>
+      <!-- 登录组件：包含登录和未登录两种状态 -->
+      <el-col :push="3" :span="2" style="padding: 27px 11px 29px;">
+        <Login />
+      </el-col>
+    </el-row>
+  </header>
 </template>
 
 <script>
 // @ is an alias to /src
-import Login from '@/components/user/login/Login.vue'
+import Login from "@/components/user/login/Login.vue";
 
 export default {
   name: "NavBar",
-  data() {
-    return {
-      //控制搜索框是否打开
-      SearchPageisActive: false,
-    };
-  },
-  components:{
+  components: {
     Login
   },
-  methods: {
-    negationSearchPageisActive() {
-      this.SearchPageisActive = !this.SearchPageisActive;
+  data(){
+    return {
+      message:""
     }
   }
 };
