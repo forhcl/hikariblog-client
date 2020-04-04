@@ -36,11 +36,22 @@
         <!-- 这里直接监听enter按钮 -->
         <el-input v-model="message" placeholder="请输入内容"></el-input>
       </el-col>
-      <!-- 登录、注册按钮/个人信息 -->
-      <el-col :push="3" :span="2" style="padding: 27px 11px 29px;">
-        <!-- 这里到时候通过条件语句，实现登录之前是登录、注册按钮，登录之后是个人信息按钮 -->
-        <Login />
-        <!-- <LoginOrRegisterDialog/> -->
+      <!-- 登录、注册按钮/新建文章、退出登录 -->
+      <el-col :push="3" :span="3" style="padding: 27px 11px 29px;">
+        <!-- 一、登录状态 -->
+        <span v-show="$store.state.user!=null">
+          <router-link to="/edit" tag="el-link">编写文章</router-link>
+          <el-divider direction="vertical"></el-divider>
+
+          <!-- 注销现在只是在前台注销，没有发送网络请求到后台，以后再加 -->
+          <el-link @click="logout()">注销</el-link>
+        </span>
+        <!-- 二、未登录状态 -->
+        <span v-show="$store.state.user==null">
+          <router-link to="/loginOrRegister/login" tag="el-link">登录</router-link>
+          <el-divider direction="vertical"></el-divider>
+          <router-link to="/loginOrRegister/register" tag="el-link">注册</router-link>
+        </span>
       </el-col>
     </el-row>
   </header>
@@ -48,17 +59,24 @@
 
 <script>
 // @ is an alias to /src
-import Login from "@/components/user/login/Login.vue";
+// import Login from "@/components/user/login/Login.vue";
 // import LoginOrRegisterDialog from "@/components/user/login/LoginOrRegisterDialog.vue"
 export default {
   name: "NavBar",
   components: {
-    Login,
+    // Login
     // LoginOrRegisterDialog
   },
-  data(){
+  data() {
     return {
-      message:""
+      message: ""
+    };
+  },
+  methods: {
+    logout() {
+      this.$store.commit("logout"),
+        //注销之后跳到首页
+        this.$router.replace("/");
     }
   }
 };

@@ -51,14 +51,18 @@
     >
       <el-input v-model.lazy="register.address" placeholder="输入住址"></el-input>
     </el-form-item>
+    <el-form-item>
+      <router-link to="/loginOrRegister/login" tag="a">用户名密码登录</router-link>
+      <el-button type="primary" @click="registeroperation()">注册</el-button>
+    </el-form-item>
   </el-form>
 </template>
 
 <script>
 //引入网络模块
-import instance3 from "../../../network/index";
+import { instance3 } from "../../../network/index";
 export default {
-  name:'RegisterFrom',
+  name: "RegisterFrom",
   data() {
     return {
       //注册用户信息
@@ -90,6 +94,8 @@ export default {
             message: "注册成功",
             type: "success"
           });
+          //注册之后跳到登录页面
+          this.$router.push('/loginOrRegister/login')
         })
         .catch(err => {
           //注册失败消息提示

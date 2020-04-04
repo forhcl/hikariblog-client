@@ -21,24 +21,33 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
+
+//全局导航守卫，用于权限控制
+router.beforeEach((to,from,next)=>{
+  //前往的路由是否需要登录
+  if(to.meta.requireAuth==true){
+    //用户是否有登录
+    if(store.state.user!=null){
+      //实现基于RBAC的角色认证（成功：下一页，失败：提示权限不足
+      if(true){
+        next()
+      }else{
+        console.log('权限不足')
+      }
+      
+    }else{
+      //未登录就弹出登录对话框
+      router.push('/loginOrRegister/login')
+    }
+  }else{
+    next()
+  }
+})
+
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
 
-//全局导航守卫，用于权限控制
-router.beforeEach((to,from,next)=>{
-  if(to.meta.requireAuth==true){
-    if(store.state.user!=null){
-      console.log('ch')
-      next()
-      //这里还可以加一步，来进行权限认证
-    }else{
-      console.log('用户未登录')
-    }
-  }else{
-    console.log("sss")
-    next()
-  }
-})
+

@@ -16,15 +16,27 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
   },
   { //标签页面路由
     path: '/tag',
-    component: () => import('../views/Tag.vue')
+    component: () => import('../views/Tag.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
   },
   { //分类页面路由
     path: '/category',
-    component: () => import('../views/Category.vue')
+    component: () => import('../views/Category.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
   },
   {
     //编辑页面
@@ -44,6 +56,24 @@ const routes = [
     //某一个文章页面
     path: '/post/:id',
     component: () => import('../views/Post.vue')
+  },
+  {
+    //登陆或者注册
+    path:'/loginOrRegister',
+    name:'loginOrRegister',
+    component:()=>import('@/components/user/login/LoginOrRegisterDialog.vue'),
+    //默认子路由！！！
+    redirect: "/loginOrRegister/login",
+    children:[
+      {
+        path:'login',
+        component:()=>import('@/components/user/login/LoginForm.vue')
+      },
+      {
+        path:'register',
+        component:()=>import('@/components/user/login/RegisterForm.vue')
+      }
+    ]
   }
 ]
 
@@ -52,5 +82,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router
