@@ -176,6 +176,8 @@ export default {
             message: res.data.message,
             type: "success"
           });
+          //登录成功之后把登录用户的信息保存到Vuex！！
+          this.$store.commit('login',res.data.currentUser)
           //关闭登录对话框
           this.loginDialogVisible = false;
         })

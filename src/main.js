@@ -26,3 +26,19 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+//全局导航守卫，用于权限控制
+router.beforeEach((to,from,next)=>{
+  if(to.meta.requireAuth==true){
+    if(store.state.user!=null){
+      console.log('ch')
+      next()
+      //这里还可以加一步，来进行权限认证
+    }else{
+      console.log('用户未登录')
+    }
+  }else{
+    console.log("sss")
+    next()
+  }
+})

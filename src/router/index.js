@@ -29,7 +29,11 @@ const routes = [
   {
     //编辑页面
     path: '/edit',
-    component: () => import('../views/Edit.vue')
+    component: () => import('../views/Edit.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
   },
   {
     //文章列表页面

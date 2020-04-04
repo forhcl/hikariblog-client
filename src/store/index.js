@@ -5,15 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    ads:333
+    //当前登录用户（密码加密）
+    user: JSON.parse(localStorage.getItem('user'))
   },
   mutations: {
-    increation(state){
-      state.ads++;
+    //登陆
+    login(state, user) {
+      localStorage.setItem('user', JSON.stringify(user))
+      state.user=user
+    },
+    //注销
+    logout(state) {
+      localStorage.removeItem('user')
+      state.user=null
     }
-  },
-  actions: {
-  },
-  modules: {
   }
 })

@@ -8,7 +8,7 @@
     <!-- 2、主要内容 -->
     <el-main>
       <router-view />
-      <button @click="add">+</button>
+      <button @click="add">退出登录</button>
     </el-main>
     <!-- 3、版权声明 -->
     <el-footer style="background-color:#C0C4CC">
@@ -33,7 +33,7 @@ export default {
   },
   methods:{
     add(){
-      this.$store.commit('increation')
+      this.$store.commit('logout')
     }
   }
 };
