@@ -8,11 +8,12 @@
     <!-- 2、主要内容 -->
     <el-main>
       <router-view />
+      <button @click="add">+</button>
     </el-main>
     <!-- 3、版权声明 -->
     <el-footer style="background-color:#C0C4CC">
       <!-- 许可证 把ICP写上去 -->
-      <p>{{license}}</p>
+      <p>{{license}}{{$store.state.ads}}</p>
     </el-footer>
   </el-container>
 </template>
@@ -29,6 +30,11 @@ export default {
     return {
       license: "©2018 Heeney. All Rights Reserved."
     };
+  },
+  methods:{
+    add(){
+      this.$store.commit('increation')
+    }
   }
 };
 </script>

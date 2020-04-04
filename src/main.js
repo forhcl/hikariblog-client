@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+//vuex
 import store from './store'
 //全局注册：引入 mavonEditor
 import mavonEditor from 'mavon-editor'
@@ -14,7 +15,6 @@ import "bootstrap/dist/js/bootstrap.min.js";
 //全局注册 Element-UI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
 
 Vue.use(mavonEditor);
 Vue.use(ElementUI);

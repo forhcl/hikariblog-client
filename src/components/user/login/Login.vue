@@ -8,7 +8,7 @@
     <!-- <router-link to="/edit" tag="el-button">新建文章</router-link> -->
     <!-- 2、个人中心按钮，用户登录之后再把src改成动态的用户avatar -->
     <!-- <el-avatar shape="square" size="small" src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"></el-avatar> -->
-    
+
     <!-- 二、未登录状态 -->
     <!-- 1、登录按钮 -->
     <el-link type="primary" @click="loginDialogVisible = true">登录</el-link>
@@ -111,7 +111,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="text" @click="switchoverLoginAndRegister()">用户名密码登录</el-button>
-        <el-button type="primary" @click="registerDialogVisible = false">注册</el-button>
+        <el-button type="primary" @click="registeroperation()">注册</el-button>
       </div>
     </el-dialog>
   </span>
@@ -119,7 +119,7 @@
 
 <script>
 //引入网络模块
-import { instance1 } from "../../../network/index";
+import { instance1, instance3 } from "../../../network/index";
 import Qs from "qs";
 
 export default {
@@ -175,6 +175,34 @@ export default {
         })
         .catch(err => {
           //登录失败消息提示
+          this.$message.error(err.response.data.message);
+        });
+    },
+    // 注册网络请求
+    registeroperation() {
+      instance3({
+        url: "/user",
+        method: "POST",
+        data: {
+          username: this.register.username,
+          password: this.register.password,
+          phone: this.register.phone,
+          address: this.register.address,
+          email: this.register.email
+        }
+      })
+        .then(res => {
+          //注册成功消息提示
+          this.$message({
+            message: "注册成功",
+            type: "success"
+          });
+          //切换到登录界面
+          this.loginDialogVisible = !this.loginDialogVisible,
+          this.registerDialogVisible = !this.registerDialogVisible;
+        })
+        .catch(err => {
+          //注册失败消息提示
           this.$message.error(err.response.data.message);
         });
     }
