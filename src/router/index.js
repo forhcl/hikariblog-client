@@ -27,14 +27,17 @@ const routes = [
     component: () => import('../views/Category.vue')
   },
   {
+    //编辑页面
     path: '/edit',
     component: () => import('../views/Edit.vue')
   },
   {
+    //文章列表页面
     path: '/list',
     component: () => import('../views/List.vue')
   },
   {
+    //某一个文章页面
     path: '/post/:id',
     component: () => import('../views/Post.vue')
   }

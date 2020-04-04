@@ -36,9 +36,11 @@
         <!-- 这里直接监听enter按钮 -->
         <el-input v-model="message" placeholder="请输入内容"></el-input>
       </el-col>
-      <!-- 登录组件：包含登录和未登录两种状态 -->
+      <!-- 登录、注册按钮/个人信息 -->
       <el-col :push="3" :span="2" style="padding: 27px 11px 29px;">
+        <!-- 这里到时候通过条件语句，实现登录之前是登录、注册按钮，登录之后是个人信息按钮 -->
         <Login />
+        <!-- <LoginOrRegisterDialog/> -->
       </el-col>
     </el-row>
   </header>
@@ -47,11 +49,12 @@
 <script>
 // @ is an alias to /src
 import Login from "@/components/user/login/Login.vue";
-
+// import LoginOrRegisterDialog from "@/components/user/login/LoginOrRegisterDialog.vue"
 export default {
   name: "NavBar",
   components: {
-    Login
+    Login,
+    // LoginOrRegisterDialog
   },
   data(){
     return {
