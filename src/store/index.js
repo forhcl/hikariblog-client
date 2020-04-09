@@ -18,6 +18,15 @@ export default new Vuex.Store({
     logout(state) {
       localStorage.removeItem('user')
       state.user=null
+    },
+    //修改用户个人信息
+    editUser(state,user){
+      state.user.phone=user.phone
+      state.user.email=user.email
+      state.user.adddress=user.address
+      localStorage.setItem('user',state.user)
     }
+    //修改用户头像
+    //修改用户密码
   }
 })

@@ -9,10 +9,10 @@
     <el-main>
       <router-view />
     </el-main>
-    <!-- 3、版权声明 -->
-    <el-footer style="background-color:#C0C4CC">
+    <!-- 3、版权声明, -->
+    <el-footer style="background-color:#fff" class="copyright" height='50px'>
       <!-- 许可证 把ICP写上去 -->
-      <p>{{license}}</p>
+      <p style="font-color:#808080">&copy;&nbsp;2020&nbsp;版权所有：李灿鸿 <br/>粤ICP备20017655号</p>
     </el-footer>
   </el-container>
 </template>
@@ -24,11 +24,6 @@ import NavBar from "@/components/navbar/NavBar.vue";
 export default {
   components: {
     NavBar
-  },
-  data() {
-    return {
-      license: "©2018 Heeney. All Rights Reserved."
-    };
   }
 };
 </script>
@@ -40,4 +35,10 @@ export default {
 @import "./assets/css/normalize.css";
 @import "./assets/css/responsive.css";
 @import "./assets/css/style.css";
+/* 版权信息置于页面底部 */
+.copyright {
+  position: fixed;
+  bottom: 0;
+  width:100%
+}
 </style>

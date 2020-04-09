@@ -1,25 +1,34 @@
 <!-- 标签页面 -->
 <template>
   <div>
-    <p>查看标签</p>
+    <ul>
+      <li v-for="tag in tagList" :key="tag.id">{{ tag.name }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-// import {instance1} from "../network/index";
+//引入网络模块
+import { instance3 } from "../network/index";
 export default {
   name: "Tag",
-  // //生命周期方法！！
-  // created(){
-  //   instance1({
-  //     url: "/home"
-  //   }).then(res=>{
-  //     console.log(res)
-  //   }).catch(err=>{
-  //     console.log(err)
-  //   })
-  // },
-  components: {
+  data(){
+    return {
+      tagList:[]
+    }
+  },
+    //生命周期方法，在创建的时候就请求用户的所有分类
+  created() {
+    instance3({
+      url: "/tag",
+      method: "GET"
+    })
+      .then(res => {
+        this.tagList = res.data;
+      })
+      .catch(err => {
+        this.$message.error("失败");
+      });
   }
 }
 

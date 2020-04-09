@@ -18,7 +18,7 @@
           </li>
         </ul>
         <!-- 文章标题,变成动态的从服务器获取 -->
-        <h1 class="post-title">{{post.title}}</h1>
+        <h1>{{post.title}}</h1>
       </div>
       <!-- 把找到的文章内容显示出来 -->
       <p v-html="post.htmlContent"></p>

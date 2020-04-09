@@ -27,7 +27,7 @@ export function instance2(config) {
   return instance(config)
 
 }
-// 普通的post申请
+// 普通请求
 export function instance3(config) {
 
   //创建axios实例
