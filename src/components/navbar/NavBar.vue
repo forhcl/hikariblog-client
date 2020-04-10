@@ -58,15 +58,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import Login from "@/components/user/login/Login.vue";
-// import LoginOrRegisterDialog from "@/components/user/login/LoginOrRegisterDialog.vue"
 export default {
   name: "NavBar",
-  components: {
-    // Login
-    // LoginOrRegisterDialog
-  },
   data() {
     return {
       message: ""
