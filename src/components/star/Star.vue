@@ -1,7 +1,7 @@
 <!-- 点赞组件 -->
 <template>
   <div>
-    <i class="el-icon-magic-stick" :class="{active:stared}" @click="starOrUnStar()"></i>
+    点赞：<i class="el-icon-magic-stick" :class="{active:stared}" @click="starOrUnStar()"></i>
     {{starCount}}
   </div>
 </template>
@@ -27,24 +27,26 @@ export default {
       stared: false
     };
   },
-  //如果用created的情况，创建的时候props的值老是取到默认值
-  async beforeUpdate() {
-    await instance1({
-      //查找哪篇文章的id根据前端路由的路径参数决定
-      url: "/star/post/" + this.postId,
-      method: "GET"
-    }).then(res => {
-      this.stared = res.data;
-    });
-    await instance1({
-      url: "/star/",
-      params: {
-        postId: this.postId
-      },
-      method: "GET"
-    }).then(res => {
-      this.starCount = res.data;
-    });
+  watch: {
+    postId(o, n) {
+      instance1({
+        //查找哪篇文章的id根据前端路由的路径参数决定
+        url: "/star/post/" + o,
+        method: "GET"
+      }).then(res => {
+        console.log(res);
+        this.stared = res.data;
+      });
+      instance1({
+        url: "/star/",
+        params: {
+          postId: o
+        },
+        method: "GET"
+      }).then(res => {
+        this.starCount = res.data;
+      });
+    }
   },
   methods: {
     async starOrUnStar() {

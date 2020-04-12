@@ -2,22 +2,6 @@
 <template>
   <div>
     <template v-if="success">
-    <el-card class="box-card" shadow="never">
-      <div slot="header" class="clearfix">
-        <span>{{post.title}}</span>
-        <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-      </div>
-      <p v-html="post.htmlContent"></p>
-      <div slot="footer" class="clearfix">
-        <Star :post-id="post.id" />
-        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-      </div>
-    </el-card>
-    </template>
-    <p>{{error.message}}</p>
-    <Star :post-id="post.id" />
-
-    <template v-if="success">
       <div class="blog-info">
         <ul class="meta">
           <li>
@@ -42,6 +26,7 @@
       <p v-html="post.htmlContent"></p>
     </template>
     <p>{{error.message}}</p>
+    <el-divider></el-divider>
     <Star :post-id="post.id" />
   </div>
 </template>

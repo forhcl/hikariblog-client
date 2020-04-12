@@ -6,7 +6,7 @@
       <NavBar />
     </el-header>
     <!-- 2、主要内容 -->
-    <el-main>
+    <el-main style="padding-bottom: 50px">
       <router-view />
     </el-main>
     <!-- 3、版权声明, -->
@@ -38,7 +38,7 @@ export default {
 /* 版权信息置于页面底部 */
 .copyright {
   position: fixed;
-  bottom: 0;
+  bottom: 0%;
   width:100%
 }
 </style>
