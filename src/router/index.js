@@ -30,9 +30,27 @@ const routes = [
       requireAuth:true
     }
   },
+  {
+    //标签下的文章列表
+    path:'/tag/:id',
+    component:() => import('../views/PostOfTag.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
+  },
   { //分类页面路由
     path: '/category',
     component: () => import('../views/Category.vue'),
+    meta:{
+      //区分路由跳转是否需要拦截
+      requireAuth:true
+    }
+  },
+  {
+    //分类下面的文章列表
+    path:'/category/:id',
+    component: () => import('../views/PostOfCategory.vue'),
     meta:{
       //区分路由跳转是否需要拦截
       requireAuth:true

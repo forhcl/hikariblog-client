@@ -1,6 +1,6 @@
 <!-- 查看某一篇具体的文章页面,因为后端中具体文章接口还没有完善，所以暂时搁置 -->
 <template>
-  <div>
+  <el-card style="width:60%,margin:0 auto">
     <template v-if="success">
       <div class="blog-info">
         <ul class="meta">
@@ -28,7 +28,8 @@
     <p>{{error.message}}</p>
     <el-divider></el-divider>
     <Star :post-id="post.id" />
-  </div>
+    <Comment/>
+  </el-card>
 </template>
 
 <script>
@@ -36,11 +37,14 @@
 import { instance1 } from "../network/index";
 //引入点赞模块
 import Star from "@/components/star/Star.vue";
+//引入评论模块
+import Comment from "@/components/comment/Comment.vue"
 
 export default {
   name: "Post",
   components: {
-    Star
+    Star,
+    Comment
   },
   data() {
     return {

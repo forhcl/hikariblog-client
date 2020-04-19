@@ -2,7 +2,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="tag in tagList" :key="tag.id">{{ tag.name }}</li>
+      <router-link v-for="tag in tagList" :key="tag.id" tag="li" :to="'/tag/'+tag.id">{{ tag.name }}</router-link>
     </ul>
   </div>
 </template>

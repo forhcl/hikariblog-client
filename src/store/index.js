@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    //当前登录用户（密码加密）
+    //当前登录用户
     user: JSON.parse(localStorage.getItem('user'))
   },
   mutations: {
