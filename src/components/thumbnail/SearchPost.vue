@@ -11,7 +11,9 @@
     <el-row :gutter="10">
       <el-col>
         <div>
-          <router-link :to="'/post/'+post.id" tag="a" style="color:black"><h4>{{post.title}}</h4></router-link>
+          <router-link :to="'/post/'+post.id" tag="a" style="color:black">
+          <h4 v-html="post.title"></h4><br/>
+          <p v-html="post.htmlContent"></p></router-link>
         </div>
       </el-col>
     </el-row>
@@ -48,7 +50,7 @@ export default {
     return {
       id: 1,
       title: "数据结构",
-      htmlContent: "<h1>fsdfsdfsdshu</h1>",
+      htmlContent: "",
       author: "sasas",
       time: "2019-10-22",
       starCount: 32,

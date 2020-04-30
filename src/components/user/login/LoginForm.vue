@@ -1,6 +1,5 @@
 <!-- 登录表单封装 -->
 <template>
-  <div>
     <!-- 登录表单页面 -->
     <el-form :model="login">
       <!-- 用户名 -->
@@ -28,7 +27,6 @@
         <el-button type="primary" @click="loginoperation()">登录</el-button>
       </el-form-item>
     </el-form>
-  </div>
 </template>
 
 <script>
@@ -70,7 +68,8 @@ export default {
           });
           //登录成功之后把登录用户的信息保存到Vuex！！
           this.$store.commit("login", res.data.currentUser);
-          //成功之后把对话框关掉
+          //成功之后跳转到首页
+          this.$router.push("/")
         })
         .catch(err => {
           //登录失败消息提示

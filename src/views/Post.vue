@@ -28,7 +28,7 @@
     <p>{{error.message}}</p>
     <el-divider></el-divider>
     <Star :post-id="post.id" />
-    <Comment/>
+    <Comment :postId="post.id"/>
   </el-card>
 </template>
 

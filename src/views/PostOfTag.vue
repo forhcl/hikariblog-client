@@ -1,7 +1,6 @@
 <!-- 某个标签下的文章列表 -->
 <template>
   <div>
-    <h1>{{$route.params.id}}</h1>
     <el-container>
       <el-aside>
         <el-image
@@ -15,30 +14,35 @@
         ></el-image>
       </el-aside>
       <el-main>
-        <PostThumbnail />
-        <PostThumbnail />
-        <PostThumbnail />
-        <PostThumbnail />
+        <PostThumbnail v-for="post in postList" :key="post.id" :post="post"/>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+//引入网络模块
+import { instance3 } from "@/network/index";
 import PostThumbnail from "@/components/thumbnail/Post.vue";
 export default {
   data() {
-    return {};
+    return {
+      postList: []
+    };
   },
-  //生命周期 - 创建完成（访问当前this实例）
-  created() {},
-  //生命周期 - 挂载完成（访问DOM元素）
-  mounted() {},
   components: {
     PostThumbnail
+  },
+  //生命周期 - 创建完成（访问当前this实例）
+  created() {
+    //去请求一下标签对应的文章列表
+    instance3({
+      //查找哪篇文章的id根据前端路由的路径参数决定
+      url: "/tag/" + this.$route.params.id + "/postList",
+      method: "GET"
+    }).then(res => {
+      this.postList = res.data;
+    });
   }
 };
 </script>
-<style scoped>
-/* @import url(); 引入css类 */
-</style>

@@ -24,6 +24,7 @@ export default {
       method: "GET"
     })
       .then(res => {
+        console.log(res.data)
         this.categoryList = res.data;
       })
       .catch(err => {

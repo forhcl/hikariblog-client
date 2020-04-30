@@ -57,6 +57,12 @@ const routes = [
     }
   },
   {
+    //全文搜索结果
+    path:'/search',
+    component: () => import('../views/ResultOfFullTextSearch.vue'),
+
+  },
+  {
     //编辑页面
     path: '/edit',
     component: () => import('../views/Edit.vue'),

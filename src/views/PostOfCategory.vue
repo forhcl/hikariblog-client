@@ -1,7 +1,5 @@
-<!-- 某个分类下面的所有文章,实现分页 -->
+<!-- 某个分类下面的所有文章,实现分页（分页现在还没处理好） -->
 <template>
-  <div>
-    <h1>{{$route.params.id}}</h1>
     <el-container>
       <el-aside>
         <el-image
@@ -15,10 +13,7 @@
         ></el-image>
       </el-aside>
       <el-main>
-        <PostThumbnail />
-        <PostThumbnail />
-        <PostThumbnail />
-        <PostThumbnail />
+        <PostThumbnail v-for="category in postList" :key="category.id" :post="category" />
         <!-- 分页控件 -->
         <div style="text-align:center">
           <!-- background:背景色
@@ -39,8 +34,6 @@
         </div>
       </el-main>
     </el-container>
-    <li v-for="category in postList" :key="category.id">{{category.title}}</li>
-  </div>
 </template>
 
 <script>

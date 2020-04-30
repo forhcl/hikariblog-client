@@ -11,23 +11,87 @@
       placeholder="输入正文…"
       @save="$save"
     ></mavon-editor>
+    <br />
+    <span>标签:</span>
+    <!-- 点一下这个标签的就把，点击的标签加入到post.tags -->
+    <el-tag type="info" v-for="tag in optionTags" :key="tag.id" @click="selectTag(tag)">{{tag.name}}</el-tag>
+    <el-input
+      class="input-new-tag"
+      v-if="inputVisible"
+      v-model="newTag"
+      ref="saveTagInput"
+      size="small"
+      @keyup.enter.native="handleInputConfirm"
+    ></el-input>
+    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+    <br />
+    <span>已选择标签：</span>
+    <!-- 关闭的时候就把标签移除掉 -->
+    <el-tag
+      v-for="(tag,index) in this.post.tags"
+      :key="tag.id+'d'"
+      closable
+      :disable-transitions="false"
+      @close="handleClose(index)"
+    >{{tag.name}}</el-tag>
+    <br />
+    分类：
+    <select name="category" id="category" v-model="post.category">
+      <option
+        v-for="category in categoryList"
+        :key="category.id"
+        :value="category"
+      >{{category.name}}</option>
+    </select>
   </div>
 </template>
 
 <script>
 //引入网络模块
-import { instance1, instance2,instance3 } from "../network/index";
+import { instance1, instance2, instance3 } from "../network/index";
 
 export default {
   name: "Edit",
   data() {
     return {
+      newTag: "",
+      inputVisible: false,
+      //该用户所有可选的标签
+      optionTags: [],
+      //该用户所有可选的标签
+      categoryList: [],
       post: {
         title: "",
-        markdownContent: ""
+        markdownContent: "",
+        //这篇文章的标签
+        tags: [],
+        //新建文章的分类
+        category: null
       },
       token: ""
     };
+  },
+  created() {
+    instance3({
+      url: "/tag",
+      method: "GET"
+    })
+      .then(res => {
+        this.optionTags = res.data;
+      })
+      .catch(err => {
+        console.log("获取标签列表失败");
+      });
+    instance3({
+      url: "/category",
+      method: "GET"
+    })
+      .then(res => {
+        this.categoryList = res.data;
+      })
+      .catch(err => {
+        console.log("获取分类列表失败");
+      });
   },
   methods: {
     // 绑定@imgAdd event，编辑器中图片上传事件
@@ -92,12 +156,15 @@ export default {
             method: "POST",
             data: {
               title: this.post.title,
-              markdownContent: this.post.markdownContent
+              markdownContent: this.post.markdownContent,
+              tags: this.post.tags,
+              category:this.post.category
             }
           })
             .then(res => {
               //这里我要跳转到查看文章页面，查看新建的文章
               //点击之后不能返回
+              console.log(this.post.title);
               this.$router.replace("/post/" + res.data);
             })
             .catch(err => {
@@ -106,8 +173,65 @@ export default {
             });
         }
       }
+    },
+    selectTag(tag) {
+      this.post.tags.push(tag);
+    },
+    handleClose(index) {
+      this.post.tags.splice(index, 1);
+    },
+    handleInputConfirm() {
+      //新建标签，成功的时候再申请新的标签列表
+      let newTag = this.newTag;
+      if (newTag) {
+        instance3({
+          url: "/tag/" + newTag,
+          method: "POST"
+        })
+          .then(res => {
+            instance3({
+              url: "/tag",
+              method: "GET"
+            })
+              .then(res => {
+                this.optionTags = res.data;
+              })
+              .catch(err => {
+                console.log("获取标签失败");
+              });
+          })
+          .catch(err => {
+            console.log("创建失败");
+          });
+      }
+      this.inputVisible = false;
+      this.newTag = "";
+    },
+    showInput() {
+      this.inputVisible = true;
     }
   },
-  components: {}
+  components: {
+    showInput() {
+      this.inputVisible = true;
+    }
+  }
 };
 </script>
+<style scoped>
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
+</style>
